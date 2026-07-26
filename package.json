@@ -1,6 +1,6 @@
 {
   "name": "shelves",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Faceted library browser — explore large book and audiobook libraries by author, decade, format, and reading status.",
   "type": "module",
   "private": true,

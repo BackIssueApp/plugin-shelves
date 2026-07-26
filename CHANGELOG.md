@@ -8,6 +8,14 @@ by the maintainers when changes merge, so concurrent PRs don't conflict here.
 
 ## [Unreleased]
 
+## [0.1.1]
+
+### Fixed
+
+- **Faster facet loading.** Facet groups are cached per user and selection and
+  served instantly (refreshing in the background when stale), so opening the
+  Filters modal no longer recomputes several full index scans every time.
+
 ## [0.1.0]
 
 ### Added

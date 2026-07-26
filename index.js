@@ -64,8 +64,34 @@ export default function register(api) {
     res.json({ enabled: config.shelvesEnabled !== false, types: cfgTypes(), size: store.size(), rebuild: store.rebuildState() });
   }, { access: CAN_VIEW });
 
+  // Facet computation scans the whole shelf index several times (~0.5-1s at
+  // 300k+ rows, synchronously) — cache per user+selection briefly so opening
+  // the Filters modal twice doesn't recompute, and repeat opens are instant.
+  const facetsCache = new Map(); // key → { at, data, refreshing }
+  const FACETS_TTL_MS = 5 * 60_000;
   api.registerRoute('get', '/api/shelves/facets', (req, res) => {
-    res.json(store.facets(uid(req), parseSel(req), { authorSearch: req.query.authorq || null }));
+    const sel = parseSel(req);
+    const authorSearch = req.query.authorq || null;
+    const userId = uid(req);
+    const key = JSON.stringify([userId, sel, authorSearch]);
+    const hit = facetsCache.get(key);
+    if (hit) {
+      // Stale-while-revalidate: serve instantly at any age; refresh off the
+      // request path when stale. Facet counts drift only on scans/progress,
+      // so brief staleness is invisible.
+      if (Date.now() - hit.at >= FACETS_TTL_MS && !hit.refreshing) {
+        hit.refreshing = true;
+        setImmediate(() => {
+          try { facetsCache.set(key, { at: Date.now(), data: store.facets(userId, sel, { authorSearch }) }); }
+          catch { hit.refreshing = false; }
+        });
+      }
+      return res.json(hit.data);
+    }
+    const data = store.facets(userId, sel, { authorSearch });
+    if (facetsCache.size > 100) facetsCache.clear();
+    facetsCache.set(key, { at: Date.now(), data });
+    res.json(data);
   }, { access: CAN_VIEW });
 
   // Resolve the core Library Filters selection → matching series ids, so core's
