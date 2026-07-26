@@ -1,0 +1,8 @@
+{
+  "name": "shelves",
+  "version": "0.1.0",
+  "description": "Faceted library browser — explore large book and audiobook libraries by author, decade, format, and reading status.",
+  "type": "module",
+  "private": true,
+  "license": "GPL-3.0-or-later"
+}
