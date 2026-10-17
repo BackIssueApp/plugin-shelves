@@ -1,0 +1,12 @@
+{
+  "author": "Autor",
+  "decade": "Década",
+  "decadeLabel": "Años {decade}",
+  "format": "Formato",
+  "readingStatus": "Estado de lectura",
+  "status": {
+    "unread": "Sin leer",
+    "reading": "Leyendo",
+    "finished": "Terminado"
+  }
+}

@@ -8,6 +8,14 @@ by the maintainers when changes merge, so concurrent PRs don't conflict here.
 
 ## [Unreleased]
 
+### Added
+
+- **Translated filters.** The Author, Decade, Format and Reading status
+  groups and the reading-status values follow the language picked under
+  Profile → Language on BackIssue builds newer than 0.9.0, and stay English on
+  older ones. Translations ship for French, German, Spanish, Italian,
+  Portuguese and Dutch in `locales/`.
+
 ## [0.1.1]
 
 ### Fixed
