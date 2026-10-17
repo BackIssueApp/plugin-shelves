@@ -8,5 +8,17 @@
     "unread": "Ungelesen",
     "reading": "Wird gelesen",
     "finished": "Gelesen"
+  },
+  "_shared": {
+    "plugins": {
+      "shelves": {
+        "description": "Facettierter Bibliotheksbrowser — große Buch- und Hörbuch-Bibliotheken nach Autor, Jahrzehnt, Format und Lesestatus erkunden."
+      }
+    },
+    "jobs": {
+      "shelves-rebuild": {
+        "label": "Browse-Index neu aufbauen"
+      }
+    }
   }
 }

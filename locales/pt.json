@@ -8,5 +8,17 @@
     "unread": "Por ler",
     "reading": "A ler",
     "finished": "Terminado"
+  },
+  "_shared": {
+    "plugins": {
+      "shelves": {
+        "description": "Navegador de biblioteca por facetas: explorar grandes bibliotecas de livros e audiolivros por autor, década, formato e estado de leitura."
+      }
+    },
+    "jobs": {
+      "shelves-rebuild": {
+        "label": "Reconstruir o índice de navegação"
+      }
+    }
   }
 }

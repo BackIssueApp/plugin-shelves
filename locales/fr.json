@@ -8,5 +8,17 @@
     "unread": "Non lu",
     "reading": "En cours",
     "finished": "Terminé"
+  },
+  "_shared": {
+    "plugins": {
+      "shelves": {
+        "description": "Navigateur de bibliothèque à facettes — explorer de grandes bibliothèques de livres et de livres audio par auteur, décennie, format et statut de lecture."
+      }
+    },
+    "jobs": {
+      "shelves-rebuild": {
+        "label": "Reconstruire l’index de navigation"
+      }
+    }
   }
 }

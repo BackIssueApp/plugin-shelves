@@ -8,5 +8,17 @@
     "unread": "Ongelezen",
     "reading": "Aan het lezen",
     "finished": "Uitgelezen"
+  },
+  "_shared": {
+    "plugins": {
+      "shelves": {
+        "description": "Bibliotheekbrowser met facetten: grote boeken- en luisterboekbibliotheken verkennen op auteur, decennium, formaat en leesstatus."
+      }
+    },
+    "jobs": {
+      "shelves-rebuild": {
+        "label": "De browse-index opnieuw opbouwen"
+      }
+    }
   }
 }

@@ -8,5 +8,17 @@
     "unread": "Non letto",
     "reading": "In lettura",
     "finished": "Finito"
+  },
+  "_shared": {
+    "plugins": {
+      "shelves": {
+        "description": "Esploratore a faccette della biblioteca: naviga grandi biblioteche di libri e audiolibri per autore, decennio, formato e stato di lettura."
+      }
+    },
+    "jobs": {
+      "shelves-rebuild": {
+        "label": "Ricostruisci l’indice di navigazione"
+      }
+    }
   }
 }
