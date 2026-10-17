@@ -1,0 +1,24 @@
+{
+  "author": "Autor",
+  "decade": "Dekada",
+  "decadeLabel": "Lata {decade}.",
+  "format": "Format",
+  "readingStatus": "Stan czytania",
+  "status": {
+    "unread": "Nieprzeczytane",
+    "reading": "W trakcie",
+    "finished": "Ukończone"
+  },
+  "_shared": {
+    "plugins": {
+      "shelves": {
+        "description": "Fasetowa przeglądarka biblioteki — przeglądaj duże biblioteki książek i audiobooków według autora, dekady, formatu i stanu czytania."
+      }
+    },
+    "jobs": {
+      "shelves-rebuild": {
+        "label": "Przebuduj indeks przeglądania"
+      }
+    }
+  }
+}

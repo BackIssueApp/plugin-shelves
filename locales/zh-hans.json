@@ -1,0 +1,24 @@
+{
+  "author": "作者",
+  "decade": "年代",
+  "decadeLabel": "{decade}年代",
+  "format": "格式",
+  "readingStatus": "阅读状态",
+  "status": {
+    "unread": "未读",
+    "reading": "在读",
+    "finished": "已读完"
+  },
+  "_shared": {
+    "plugins": {
+      "shelves": {
+        "description": "分面式书库浏览器——按作者、年代、格式和阅读状态浏览大型图书和有声书书库。"
+      }
+    },
+    "jobs": {
+      "shelves-rebuild": {
+        "label": "重建浏览索引"
+      }
+    }
+  }
+}
