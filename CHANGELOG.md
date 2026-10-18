@@ -8,6 +8,12 @@ by the maintainers when changes merge, so concurrent PRs don't conflict here.
 
 ## [Unreleased]
 
+### Changed
+
+- **Listening status matches the audiobooks plugin.** An audiobook counts as
+  finished in its last two minutes, or its last 1% for a long book, instead of
+  only its last 30 seconds.
+
 ## [0.2.0] — 2026-10-17
 
 ### Added

@@ -81,7 +81,7 @@ export function openShelvesStore(dbPath) {
     progressSources.push("SELECT issue_id, CASE WHEN fraction>=0.99 THEN 'finished' WHEN fraction>0 THEN 'reading' ELSE 'unread' END st FROM ebooks_progress WHERE user_id=@uid");
   }
   if (hasTable('audiobooks_progress')) {
-    progressSources.push("SELECT issue_id, CASE WHEN finished=1 OR (duration>0 AND position>=duration-30) THEN 'finished' WHEN position>0 THEN 'reading' ELSE 'unread' END st FROM audiobooks_progress WHERE user_id=@uid");
+    progressSources.push("SELECT issue_id, CASE WHEN finished=1 OR (duration>0 AND position>=duration-MIN(MAX(120,duration*0.01),duration*0.1)) THEN 'finished' WHEN position>0 THEN 'reading' ELSE 'unread' END st FROM audiobooks_progress WHERE user_id=@uid");
   }
   // A CTE mapping the user's issues → 'reading'/'finished' (absent = 'unread').
   const progressCte = progressSources.length
