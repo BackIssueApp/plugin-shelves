@@ -34,6 +34,10 @@ export default function register(api) {
   api.registerClientAsset?.({ js: 'client/ui.js' });
 
   const runRebuild = () => store.rebuild({ types: cfgTypes() });
+  // The index is only built at boot when empty, so a nightly rebuild keeps
+  // newly added books in it. A Jobs page edit persists and wins.
+  config.shelvesRebuildCron ??= '30 4 * * *';
+  config.shelvesRebuildEnabled ??= true;
   api.registerJob?.({ id: 'shelves-rebuild', label: 'Rebuild the browse index', scheduleKey: 'shelvesRebuildHours', run: () => runRebuild() });
   // Boot catch-up: build the index shortly after startup if it's empty but there
   // are libraries of the configured types to browse.

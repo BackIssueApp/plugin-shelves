@@ -10,6 +10,9 @@ by the maintainers when changes merge, so concurrent PRs don't conflict here.
 
 ### Changed
 
+- **The browse index rebuilds nightly.** It was only built at startup when
+  empty, so books added later didn't appear in browsing until someone rebuilt
+  it by hand. Change or turn off the schedule under Jobs.
 - **Listening status matches the audiobooks plugin.** An audiobook counts as
   finished in its last two minutes, or its last 1% for a long book, instead of
   only its last 30 seconds.
