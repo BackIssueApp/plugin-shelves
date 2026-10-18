@@ -9,6 +9,65 @@
     "reading": "Aan het lezen",
     "finished": "Uitgelezen"
   },
+  "menu": {
+    "label": "Boekenkasten",
+    "title": "Blader door boeken en luisterboeken op auteur, decennium, formaat en status"
+  },
+  "drawer": {
+    "label": "Door boekenkasten bladeren",
+    "library": "Bibliotheek",
+    "allLibraries": "Alle bibliotheken",
+    "search": "Titels zoeken",
+    "close": "Sluiten (Esc)",
+    "filters": "Filters",
+    "filtersN": "Filters ({count})",
+    "clear": "Alles wissen",
+    "remove": "{name} verwijderen",
+    "nTitles": {
+      "one": "{n} titel",
+      "other": "{n} titels"
+    },
+    "showResults": "Resultaten tonen",
+    "loadMore": "Meer laden",
+    "loading": "Laden…",
+    "loadFailed": "De boekenkasten konden niet worden geladen: {error}",
+    "noMatches": "Niets komt overeen met deze filters.",
+    "empty": "Er is nog niets geïndexeerd.",
+    "emptyHint": "Voeg een bibliotheek met boeken of luisterboeken toe, of bouw de bladerindex opnieuw op als je er al een hebt.",
+    "building": "Bladerindex wordt opgebouwd: {done} van {total}",
+    "rebuild": "Index opnieuw opbouwen",
+    "rebuildStarted": "Bladerindex wordt opnieuw opgebouwd",
+    "disabled": "Boekenkasten staat uit. Zet het aan onder Instellingen → Plug-ins."
+  },
+  "sort": {
+    "label": "Sorteren",
+    "author": "Auteur",
+    "title": "Titel",
+    "year": "Nieuwste eerst",
+    "added": "Recent toegevoegd"
+  },
+  "authors": {
+    "search": "Auteur zoeken",
+    "top": "Top",
+    "none": "Geen auteurs gevonden."
+  },
+  "formats": {
+    "audiobook": "Audio",
+    "onDemand": "Op aanvraag"
+  },
+  "settings": {
+    "intro": "Blader door bibliotheken met boeken en luisterboeken op auteur, decennium, formaat en leesstatus, via Boekenkasten in de zijbalk en de knop Filters van de bibliotheek.",
+    "types": "Bibliotheektypen",
+    "ebook": "Boeken",
+    "audiobook": "Luisterboeken",
+    "rebuild": "Nu opnieuw opbouwen",
+    "nIndexed": {
+      "one": "{n} titel geïndexeerd",
+      "other": "{n} titels geïndexeerd"
+    },
+    "notBuilt": "De bladerindex is nog niet opgebouwd.",
+    "note": "De index werkt zichzelf bij als er titels bijkomen of verdwijnen, en wordt elke nacht volledig opnieuw opgebouwd. Wijzigingen hier gelden na herladen."
+  },
   "_shared": {
     "plugins": {
       "shelves": {

@@ -9,6 +9,65 @@
     "reading": "Reading",
     "finished": "Finished"
   },
+  "menu": {
+    "label": "Shelves",
+    "title": "Browse books and audiobooks by author, decade, format and status"
+  },
+  "drawer": {
+    "label": "Browse shelves",
+    "library": "Library",
+    "allLibraries": "All libraries",
+    "search": "Search titles",
+    "close": "Close (Esc)",
+    "filters": "Filters",
+    "filtersN": "Filters ({count})",
+    "clear": "Clear all",
+    "remove": "Remove {name}",
+    "nTitles": {
+      "one": "{n} title",
+      "other": "{n} titles"
+    },
+    "showResults": "Show results",
+    "loadMore": "Load more",
+    "loading": "Loading…",
+    "loadFailed": "Couldn’t load the shelves: {error}",
+    "noMatches": "Nothing matches these filters.",
+    "empty": "Nothing is indexed yet.",
+    "emptyHint": "Add a Books or Audiobooks library, or rebuild the browse index if you already have one.",
+    "building": "Building the browse index: {done} of {total}",
+    "rebuild": "Rebuild index",
+    "rebuildStarted": "Rebuilding the browse index",
+    "disabled": "Shelves is turned off. Turn it on under Settings → Plugins."
+  },
+  "sort": {
+    "label": "Sort",
+    "author": "Author",
+    "title": "Title",
+    "year": "Newest first",
+    "added": "Recently added"
+  },
+  "authors": {
+    "search": "Find an author",
+    "top": "Top",
+    "none": "No authors match."
+  },
+  "formats": {
+    "audiobook": "Audio",
+    "onDemand": "On demand"
+  },
+  "settings": {
+    "intro": "Browse book and audiobook libraries by author, decade, format and reading status, from Shelves in the sidebar and the Library Filters button.",
+    "types": "Library types",
+    "ebook": "Books",
+    "audiobook": "Audiobooks",
+    "rebuild": "Rebuild now",
+    "nIndexed": {
+      "one": "{n} title indexed",
+      "other": "{n} titles indexed"
+    },
+    "notBuilt": "The browse index hasn’t been built yet.",
+    "note": "The index updates on its own when titles are added or removed, and rebuilds in full every night. Changes here apply after a reload."
+  },
   "_shared": {
     "plugins": {
       "shelves": {

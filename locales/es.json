@@ -9,6 +9,65 @@
     "reading": "Leyendo",
     "finished": "Terminado"
   },
+  "menu": {
+    "label": "Estanterías",
+    "title": "Explorar libros y audiolibros por autor, década, formato y estado"
+  },
+  "drawer": {
+    "label": "Explorar estanterías",
+    "library": "Biblioteca",
+    "allLibraries": "Todas las bibliotecas",
+    "search": "Buscar títulos",
+    "close": "Cerrar (Esc)",
+    "filters": "Filtros",
+    "filtersN": "Filtros ({count})",
+    "clear": "Quitar todo",
+    "remove": "Quitar {name}",
+    "nTitles": {
+      "one": "{n} título",
+      "other": "{n} títulos"
+    },
+    "showResults": "Ver resultados",
+    "loadMore": "Cargar más",
+    "loading": "Cargando…",
+    "loadFailed": "No se pudieron cargar las estanterías: {error}",
+    "noMatches": "Nada coincide con estos filtros.",
+    "empty": "Todavía no hay nada indexado.",
+    "emptyHint": "Añade una biblioteca de libros o audiolibros, o reconstruye el índice de exploración si ya tienes una.",
+    "building": "Construyendo el índice de exploración: {done} de {total}",
+    "rebuild": "Reconstruir índice",
+    "rebuildStarted": "Reconstruyendo el índice de exploración",
+    "disabled": "Estanterías está desactivado. Actívalo en Ajustes → Plugins."
+  },
+  "sort": {
+    "label": "Ordenar",
+    "author": "Autor",
+    "title": "Título",
+    "year": "Más recientes",
+    "added": "Añadidos recientemente"
+  },
+  "authors": {
+    "search": "Buscar un autor",
+    "top": "Principales",
+    "none": "Ningún autor coincide."
+  },
+  "formats": {
+    "audiobook": "Audio",
+    "onDemand": "Bajo demanda"
+  },
+  "settings": {
+    "intro": "Explora bibliotecas de libros y audiolibros por autor, década, formato y estado de lectura, desde Estanterías en la barra lateral y el botón Filtros de la biblioteca.",
+    "types": "Tipos de biblioteca",
+    "ebook": "Libros",
+    "audiobook": "Audiolibros",
+    "rebuild": "Reconstruir ahora",
+    "nIndexed": {
+      "one": "{n} título indexado",
+      "other": "{n} títulos indexados"
+    },
+    "notBuilt": "El índice de exploración aún no se ha construido.",
+    "note": "El índice se actualiza solo cuando se añaden o eliminan títulos, y se reconstruye por completo cada noche. Los cambios aquí se aplican tras recargar."
+  },
   "_shared": {
     "plugins": {
       "shelves": {

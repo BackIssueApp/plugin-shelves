@@ -1,0 +1,159 @@
+/* Shelves browser — a full-screen overlay the plugin owns. Uses the app's theme
+   variables (--ink/--panel/--text/--line/--accent…) and its global .cover/.btn
+   classes, so it matches without depending on core component markup. */
+.shelves { position: fixed; inset: 0; z-index: 1200; display: none; }
+.shelves.is-open { display: block; }
+.shelves__backdrop { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.55); backdrop-filter: blur(2px); }
+
+.shelves__panel {
+  position: absolute; inset: 0; margin: auto;
+  width: min(1280px, 96vw); height: min(92vh, 1000px);
+  display: flex; flex-direction: column;
+  background: var(--ink); border: 1px solid var(--line);
+  border-radius: var(--radius); box-shadow: var(--shadow, 0 20px 60px rgba(0, 0, 0, 0.5));
+  overflow: hidden;
+}
+
+.shelves__head {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 16px; border-bottom: 1px solid var(--line); background: var(--panel);
+}
+.shelves__title { font-family: var(--font-display); font-size: 20px; letter-spacing: .02em; text-transform: uppercase; color: var(--text); white-space: nowrap; margin-right: 6px; }
+.shelves__head select, .shelves__head input[type="search"], .shelves__authorq {
+  background: var(--ink); color: var(--text); border: 1px solid var(--line);
+  border-radius: var(--radius-sm); padding: 7px 10px; font: inherit; font-size: 13.5px; min-width: 0;
+}
+.shelves__head select:focus-visible, .shelves__head input:focus-visible, .shelves__authorq:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.shelves__lib { max-width: 220px; }
+.shelves__search { flex: 1; max-width: 420px; }
+.shelves__sortwrap { display: flex; align-items: center; gap: 6px; color: var(--muted); font-size: 12.5px; margin-left: auto; }
+.shelves__filtersbtn, .shelves__done { display: none; }
+.shelves__filtersbtn.is-on { color: var(--text); border-color: var(--accent); }
+.shelves__close { border: none; background: transparent; color: var(--muted); cursor: pointer; padding: 6px; line-height: 0; border-radius: var(--radius-sm); }
+.shelves__close:hover { color: var(--text); background: var(--panel-2); }
+.shelves__close:focus-visible { outline: 2px solid var(--accent); }
+
+.shelves__body { flex: 1; min-height: 0; display: grid; grid-template-columns: 270px 1fr; }
+.shelves__aside {
+  overflow-y: auto; padding: 14px 14px 24px; border-right: 1px solid var(--line);
+  background: var(--panel); display: flex; flex-direction: column; gap: 18px;
+  transition: opacity .15s;
+}
+.shelves__aside.is-loading, .shelves__grid.is-loading { opacity: .55; }
+.shelves__group { display: flex; flex-direction: column; gap: 6px; }
+.shelves__gtitle { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--faint); }
+.shelves__authorq { width: 100%; }
+
+.shelves__letters { display: flex; flex-wrap: wrap; gap: 2px; }
+.shelves__letter {
+  border: none; background: transparent; color: var(--muted); cursor: pointer;
+  min-width: 24px; height: 24px; padding: 0 5px; border-radius: 5px; font-size: 12px; font-variant-numeric: tabular-nums;
+}
+.shelves__letter:hover { color: var(--text); background: var(--panel-2); }
+.shelves__letter.is-on { background: var(--accent); color: #fff; }
+
+.shelves__authors { display: flex; flex-direction: column; max-height: 340px; overflow-y: auto; margin: 0 -6px; }
+.shelves__opt {
+  display: flex; align-items: center; gap: 8px; width: 100%;
+  border: none; background: transparent; color: var(--text); cursor: pointer; text-align: left;
+  padding: 6px; border-radius: var(--radius-sm); font: inherit; font-size: 13px;
+}
+.shelves__opt:hover { background: var(--panel-2); }
+.shelves__check {
+  flex: none; width: 16px; height: 16px; border: 1px solid var(--line); border-radius: 4px;
+  display: inline-flex; align-items: center; justify-content: center; color: #fff;
+}
+.shelves__check svg { width: 12px; height: 12px; }
+.shelves__opt.is-on .shelves__check { background: var(--accent); border-color: var(--accent); }
+.shelves__optlabel { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.shelves__count { color: var(--faint); font-size: 12px; font-variant-numeric: tabular-nums; }
+.shelves__hint { color: var(--faint); font-size: 12.5px; padding: 6px; }
+
+.shelves__chipset { display: flex; flex-wrap: wrap; gap: 6px; }
+.shelves__pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  border: 1px solid var(--line); background: transparent; color: var(--muted); cursor: pointer;
+  padding: 4px 10px; border-radius: 999px; font: inherit; font-size: 12.5px;
+}
+.shelves__pill .shelves__optlabel { flex: none; }
+.shelves__pill:hover { color: var(--text); }
+.shelves__pill.is-on { background: var(--accent); border-color: var(--accent); color: #fff; }
+.shelves__pill.is-on .shelves__count { color: rgba(255, 255, 255, .8); }
+.shelves__opt:focus-visible, .shelves__pill:focus-visible, .shelves__letter:focus-visible, .shelves__chip:focus-visible, .shelf-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.shelves__main { overflow-y: auto; padding: 14px 18px 28px; min-width: 0; }
+.shelves__bar { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; min-height: 28px; margin-bottom: 12px; }
+.shelves__total { color: var(--muted); font-size: 13px; font-variant-numeric: tabular-nums; margin-right: 6px; }
+.shelves__chips { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.shelves__chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--panel-2); border: 1px solid var(--line); color: var(--text); cursor: pointer;
+  padding: 3px 6px 3px 10px; border-radius: 999px; font: inherit; font-size: 12.5px;
+}
+.shelves__chip span { display: inline-flex; color: var(--muted); }
+.shelves__chip svg { width: 12px; height: 12px; }
+.shelves__chip:hover span { color: var(--text); }
+.shelves__link { border: none; background: none; color: var(--accent); cursor: pointer; font: inherit; font-size: 12.5px; padding: 2px 4px; }
+.shelves__link:hover { text-decoration: underline; }
+
+.shelves__grid {
+  display: grid; gap: 18px 14px;
+  grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+  align-items: start; transition: opacity .15s;
+}
+.shelves__note { grid-column: 1 / -1; color: var(--muted); text-align: center; padding: 56px 12px; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.shelves__note p { margin: 0; max-width: 46ch; color: var(--faint); font-size: 13px; }
+.shelves__note--bad { color: var(--red); }
+.shelves__more { display: flex; justify-content: center; padding-top: 20px; }
+
+.shelf-card {
+  display: flex; flex-direction: column; gap: 3px; min-width: 0;
+  border: none; background: transparent; padding: 0; color: inherit; cursor: pointer; text-align: left; font: inherit;
+  border-radius: var(--radius-sm);
+}
+/* The global .cover is a small list thumbnail; widen it to fill the card. */
+.shelf-card__art.cover { width: 100%; height: auto; aspect-ratio: 2 / 3; border-radius: 6px; margin-bottom: 5px; transition: transform .15s; }
+.shelf-card--audio .shelf-card__art.cover { aspect-ratio: 1 / 1; }
+.shelf-card__art .cover__ph { font-size: 26px; }
+.shelf-card:hover .shelf-card__art { transform: translateY(-2px); }
+.shelf-card__badge {
+  position: absolute; z-index: 2; right: 6px; bottom: 6px;
+  background: rgba(21, 19, 28, .86); color: var(--text); border-radius: 999px;
+  font-size: 11px; padding: 2px 8px; line-height: 1.5;
+}
+.shelf-card__badge--done { background: var(--green); color: #10251a; padding: 3px; line-height: 0; }
+.shelf-card__badge--done svg { width: 12px; height: 12px; }
+.shelf-card__title { font-size: 13px; font-weight: 600; color: var(--text); line-height: 1.25; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.shelf-card__meta { font-size: 11.5px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+@media (prefers-reduced-motion: reduce) {
+  .shelf-card__art.cover, .shelves__aside, .shelves__grid { transition: none; }
+  .shelf-card:hover .shelf-card__art { transform: none; }
+}
+
+/* Settings card */
+.shelves-set__types { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; margin: 4px 0 10px; }
+.shelves-set__label { font-size: 12.5px; color: var(--muted); }
+.shelves-set__type { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; cursor: pointer; }
+.shelves-set__index { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 6px; }
+
+/* Phones and narrow tablets: the browser fills the screen and the facet column
+   becomes a sheet behind the Filters button. */
+@media (max-width: 760px) {
+  .shelves__panel { width: 100vw; height: 100%; border-radius: 0; border: none; }
+  .shelves__head { flex-wrap: wrap; padding: 10px 16px; gap: 8px; }
+  .shelves__title { flex: 1; font-size: 18px; }
+  .shelves__close { order: 2; }
+  .shelves__search { order: 3; flex: 1 1 100%; max-width: none; }
+  .shelves__lib { order: 4; flex: 1 1 0; max-width: none; }
+  .shelves__sortwrap { order: 5; margin-left: 0; }
+  .shelves__sortwrap span { display: none; }
+  .shelves__filtersbtn { order: 6; display: inline-flex; }
+  .shelves__body { grid-template-columns: 1fr; position: relative; }
+  .shelves__aside { position: absolute; inset: 0; z-index: 3; border-right: none; display: none; }
+  .shelves.is-filtering .shelves__aside { display: flex; padding-bottom: 80px; }
+  .shelves.is-filtering .shelves__done { display: block; position: absolute; z-index: 4; left: 16px; right: 16px; bottom: 16px; }
+  .shelves__authors { max-height: none; }
+  .shelves__main { padding: 12px 16px 24px; }
+  .shelves__grid { grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 14px 10px; }
+}

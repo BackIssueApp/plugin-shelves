@@ -9,6 +9,65 @@
     "reading": "En cours",
     "finished": "Terminé"
   },
+  "menu": {
+    "label": "Rayons",
+    "title": "Parcourir les livres et livres audio par auteur, décennie, format et statut"
+  },
+  "drawer": {
+    "label": "Parcourir les rayons",
+    "library": "Bibliothèque",
+    "allLibraries": "Toutes les bibliothèques",
+    "search": "Rechercher un titre",
+    "close": "Fermer (Échap)",
+    "filters": "Filtres",
+    "filtersN": "Filtres ({count})",
+    "clear": "Tout effacer",
+    "remove": "Retirer {name}",
+    "nTitles": {
+      "one": "{n} titre",
+      "other": "{n} titres"
+    },
+    "showResults": "Voir les résultats",
+    "loadMore": "Afficher plus",
+    "loading": "Chargement…",
+    "loadFailed": "Impossible de charger les rayons : {error}",
+    "noMatches": "Aucun titre ne correspond à ces filtres.",
+    "empty": "Rien n’est encore indexé.",
+    "emptyHint": "Ajoutez une bibliothèque de livres ou de livres audio, ou reconstruisez l’index de navigation si vous en avez déjà une.",
+    "building": "Construction de l’index de navigation : {done} sur {total}",
+    "rebuild": "Reconstruire l’index",
+    "rebuildStarted": "Reconstruction de l’index de navigation",
+    "disabled": "Les rayons sont désactivés. Activez-les dans Paramètres → Plugins."
+  },
+  "sort": {
+    "label": "Trier",
+    "author": "Auteur",
+    "title": "Titre",
+    "year": "Plus récents",
+    "added": "Ajoutés récemment"
+  },
+  "authors": {
+    "search": "Trouver un auteur",
+    "top": "Principaux",
+    "none": "Aucun auteur ne correspond."
+  },
+  "formats": {
+    "audiobook": "Audio",
+    "onDemand": "À la demande"
+  },
+  "settings": {
+    "intro": "Parcourez les bibliothèques de livres et de livres audio par auteur, décennie, format et statut de lecture, depuis Rayons dans la barre latérale et le bouton Filtres de la bibliothèque.",
+    "types": "Types de bibliothèque",
+    "ebook": "Livres",
+    "audiobook": "Livres audio",
+    "rebuild": "Reconstruire maintenant",
+    "nIndexed": {
+      "one": "{n} titre indexé",
+      "other": "{n} titres indexés"
+    },
+    "notBuilt": "L’index de navigation n’a pas encore été construit.",
+    "note": "L’index se met à jour de lui-même quand des titres sont ajoutés ou supprimés, et se reconstruit entièrement chaque nuit. Les changements ici s’appliquent après un rechargement."
+  },
   "_shared": {
     "plugins": {
       "shelves": {

@@ -9,6 +9,63 @@
     "reading": "在读",
     "finished": "已读完"
   },
+  "menu": {
+    "label": "书架",
+    "title": "按作者、年代、格式和状态浏览图书和有声书"
+  },
+  "drawer": {
+    "label": "浏览书架",
+    "library": "书库",
+    "allLibraries": "所有书库",
+    "search": "搜索书名",
+    "close": "关闭 (Esc)",
+    "filters": "筛选",
+    "filtersN": "筛选 ({count})",
+    "clear": "全部清除",
+    "remove": "移除 {name}",
+    "nTitles": {
+      "other": "{n} 部作品"
+    },
+    "showResults": "查看结果",
+    "loadMore": "加载更多",
+    "loading": "加载中…",
+    "loadFailed": "无法加载书架：{error}",
+    "noMatches": "没有符合这些筛选条件的作品。",
+    "empty": "还没有建立任何索引。",
+    "emptyHint": "请添加图书或有声书书库；如果已经有了，请重建浏览索引。",
+    "building": "正在建立浏览索引：{done} / {total}",
+    "rebuild": "重建索引",
+    "rebuildStarted": "正在重建浏览索引",
+    "disabled": "书架已关闭。请在 设置 → 插件 中开启。"
+  },
+  "sort": {
+    "label": "排序",
+    "author": "作者",
+    "title": "书名",
+    "year": "最新优先",
+    "added": "最近添加"
+  },
+  "authors": {
+    "search": "查找作者",
+    "top": "热门",
+    "none": "没有匹配的作者。"
+  },
+  "formats": {
+    "audiobook": "音频",
+    "onDemand": "按需"
+  },
+  "settings": {
+    "intro": "通过侧边栏的“书架”和书库的“筛选”按钮，按作者、年代、格式和阅读状态浏览图书和有声书书库。",
+    "types": "书库类型",
+    "ebook": "图书",
+    "audiobook": "有声书",
+    "rebuild": "立即重建",
+    "nIndexed": {
+      "other": "已索引 {n} 部作品"
+    },
+    "notBuilt": "浏览索引尚未建立。",
+    "note": "添加或删除作品时索引会自动更新，并在每晚完整重建。此处的更改在重新加载后生效。"
+  },
   "_shared": {
     "plugins": {
       "shelves": {

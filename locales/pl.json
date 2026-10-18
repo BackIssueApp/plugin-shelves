@@ -9,6 +9,69 @@
     "reading": "W trakcie",
     "finished": "Ukończone"
   },
+  "menu": {
+    "label": "Półki",
+    "title": "Przeglądaj książki i audiobooki według autora, dekady, formatu i stanu"
+  },
+  "drawer": {
+    "label": "Przeglądaj półki",
+    "library": "Biblioteka",
+    "allLibraries": "Wszystkie biblioteki",
+    "search": "Szukaj tytułów",
+    "close": "Zamknij (Esc)",
+    "filters": "Filtry",
+    "filtersN": "Filtry ({count})",
+    "clear": "Wyczyść wszystko",
+    "remove": "Usuń {name}",
+    "nTitles": {
+      "one": "{n} tytuł",
+      "few": "{n} tytuły",
+      "many": "{n} tytułów",
+      "other": "{n} tytułu"
+    },
+    "showResults": "Pokaż wyniki",
+    "loadMore": "Wczytaj więcej",
+    "loading": "Wczytywanie…",
+    "loadFailed": "Nie udało się wczytać półek: {error}",
+    "noMatches": "Nic nie pasuje do tych filtrów.",
+    "empty": "Nic nie jest jeszcze zindeksowane.",
+    "emptyHint": "Dodaj bibliotekę książek lub audiobooków albo przebuduj indeks przeglądania, jeśli już ją masz.",
+    "building": "Budowanie indeksu przeglądania: {done} z {total}",
+    "rebuild": "Przebuduj indeks",
+    "rebuildStarted": "Przebudowywanie indeksu przeglądania",
+    "disabled": "Półki są wyłączone. Włącz je w Ustawienia → Wtyczki."
+  },
+  "sort": {
+    "label": "Sortuj",
+    "author": "Autor",
+    "title": "Tytuł",
+    "year": "Najnowsze",
+    "added": "Ostatnio dodane"
+  },
+  "authors": {
+    "search": "Znajdź autora",
+    "top": "Najczęstsi",
+    "none": "Brak pasujących autorów."
+  },
+  "formats": {
+    "audiobook": "Audio",
+    "onDemand": "Na żądanie"
+  },
+  "settings": {
+    "intro": "Przeglądaj biblioteki książek i audiobooków według autora, dekady, formatu i stanu czytania, z Półek na pasku bocznym i przycisku Filtry w bibliotece.",
+    "types": "Typy bibliotek",
+    "ebook": "Książki",
+    "audiobook": "Audiobooki",
+    "rebuild": "Przebuduj teraz",
+    "nIndexed": {
+      "one": "{n} tytuł zindeksowany",
+      "few": "{n} tytuły zindeksowane",
+      "many": "{n} tytułów zindeksowanych",
+      "other": "{n} tytułu zindeksowanego"
+    },
+    "notBuilt": "Indeks przeglądania nie został jeszcze zbudowany.",
+    "note": "Indeks aktualizuje się sam, gdy tytuły są dodawane lub usuwane, i co noc jest przebudowywany w całości. Zmiany tutaj działają po przeładowaniu."
+  },
   "_shared": {
     "plugins": {
       "shelves": {

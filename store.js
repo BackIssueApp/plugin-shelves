@@ -88,7 +88,7 @@ export function openShelvesStore(dbPath) {
     ? `prog AS (${progressSources.join(' UNION ALL ')})`
     : `prog AS (SELECT NULL issue_id, NULL st WHERE 0)`;
 
-  const rebuildState = { running: false, done: 0, total: 0, finishedAt: null, error: null };
+  const rebuildState = { running: false, done: 0, total: 0, finishedAt: null, error: null, generation: 0 };
 
   const api = {
     db,
@@ -163,12 +163,27 @@ export function openShelvesStore(dbPath) {
           await new Promise((r) => setImmediate(r)); // let the event loop breathe
         }
         rebuildState.finishedAt = new Date().toISOString();
+        rebuildState.generation++;
       } catch (e) {
         rebuildState.error = String(e?.message || e);
       } finally {
         rebuildState.running = false;
       }
       return rebuildState;
+    },
+
+    /** Does the index disagree with the catalog for these types? Compares the
+     *  count and newest id of indexable series against the index, and looks for
+     *  rows of types no longer indexed. Cheap (three indexed aggregates), so it
+     *  can run on a timer: titles a scan added or removed show up without
+     *  waiting for the nightly rebuild. */
+    isStale(types = DEFAULT_TYPES) {
+      const t = (types.length ? types : DEFAULT_TYPES).map(String);
+      const ph = t.map(() => '?').join(',');
+      const cat = db.prepare(`SELECT COUNT(*) c, COALESCE(MAX(id),0) m FROM series WHERE type IN (${ph}) AND library_id IS NOT NULL`).get(...t);
+      const idx = db.prepare(`SELECT COUNT(*) c, COALESCE(MAX(series_id),0) m FROM shelf_index WHERE type IN (${ph})`).get(...t);
+      const other = db.prepare(`SELECT COUNT(*) c FROM shelf_index WHERE type NOT IN (${ph})`).get(...t).c;
+      return cat.c !== idx.c || cat.m !== idx.m || other > 0;
     },
 
     /** Count of indexed series (0 → never built). */
@@ -278,10 +293,11 @@ export function openShelvesStore(dbPath) {
 
     /** A–Z author index for the Browse-by-Author view: the letters that have
      *  authors, and (for a chosen letter/search) the authors + their counts. */
-    authorsIndex({ type = null, library = null, letter = null, search = null, limit = 500 } = {}) {
+    authorsIndex({ type = null, library = null, letter = null, search = null, limit = 500, includeRestricted = false } = {}) {
       const conds = [];
       if (type) conds.push('si.type = @type');
       if (library) conds.push('si.library_id = @lib');
+      if (!includeRestricted) conds.push('si.restricted = 0');
       const typeJoin = 'JOIN shelf_index si ON si.series_id = ssa.series_id' + (conds.length ? ' AND ' + conds.join(' AND ') : '');
       const p = {}; if (type) p.type = type; if (library) p.lib = library;
       const letters = db.prepare(`SELECT DISTINCT a.letter L FROM shelf_authors a

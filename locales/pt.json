@@ -9,6 +9,65 @@
     "reading": "A ler",
     "finished": "Terminado"
   },
+  "menu": {
+    "label": "Estantes",
+    "title": "Explorar livros e audiolivros por autor, década, formato e estado"
+  },
+  "drawer": {
+    "label": "Explorar estantes",
+    "library": "Biblioteca",
+    "allLibraries": "Todas as bibliotecas",
+    "search": "Pesquisar títulos",
+    "close": "Fechar (Esc)",
+    "filters": "Filtros",
+    "filtersN": "Filtros ({count})",
+    "clear": "Limpar tudo",
+    "remove": "Remover {name}",
+    "nTitles": {
+      "one": "{n} título",
+      "other": "{n} títulos"
+    },
+    "showResults": "Ver resultados",
+    "loadMore": "Carregar mais",
+    "loading": "A carregar…",
+    "loadFailed": "Não foi possível carregar as estantes: {error}",
+    "noMatches": "Nada corresponde a estes filtros.",
+    "empty": "Ainda não há nada indexado.",
+    "emptyHint": "Adicione uma biblioteca de livros ou audiolivros, ou reconstrua o índice de navegação se já tiver uma.",
+    "building": "A construir o índice de navegação: {done} de {total}",
+    "rebuild": "Reconstruir índice",
+    "rebuildStarted": "A reconstruir o índice de navegação",
+    "disabled": "As Estantes estão desativadas. Ative-as em Definições → Plugins."
+  },
+  "sort": {
+    "label": "Ordenar",
+    "author": "Autor",
+    "title": "Título",
+    "year": "Mais recentes",
+    "added": "Adicionados recentemente"
+  },
+  "authors": {
+    "search": "Encontrar um autor",
+    "top": "Principais",
+    "none": "Nenhum autor corresponde."
+  },
+  "formats": {
+    "audiobook": "Áudio",
+    "onDemand": "A pedido"
+  },
+  "settings": {
+    "intro": "Explore bibliotecas de livros e audiolivros por autor, década, formato e estado de leitura, a partir de Estantes na barra lateral e do botão Filtros da biblioteca.",
+    "types": "Tipos de biblioteca",
+    "ebook": "Livros",
+    "audiobook": "Audiolivros",
+    "rebuild": "Reconstruir agora",
+    "nIndexed": {
+      "one": "{n} título indexado",
+      "other": "{n} títulos indexados"
+    },
+    "notBuilt": "O índice de navegação ainda não foi construído.",
+    "note": "O índice atualiza-se sozinho quando são adicionados ou removidos títulos, e é reconstruído por completo todas as noites. As alterações aqui aplicam-se depois de recarregar."
+  },
   "_shared": {
     "plugins": {
       "shelves": {

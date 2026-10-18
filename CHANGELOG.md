@@ -8,14 +8,42 @@ by the maintainers when changes merge, so concurrent PRs don't conflict here.
 
 ## [Unreleased]
 
+### Added
+
+- **The Shelves browser.** **Shelves** in the sidebar opens a full-screen
+  browser for book and audiobook libraries: pick authors (search them, or
+  browse an A to Z strip by surname), decades, formats and a reading status,
+  each with live counts, and the matching covers fill the page. Search by title,
+  sort by author, title, newest or recently added, and limit it to one library.
+  Every cover opens its series page. On a phone the facets sit behind a
+  **Filters** button.
+- **A settings card.** Settings → Plugins → Shelves has the on/off switch, a
+  choice of Books, Audiobooks or both, the number of titles indexed, and
+  **Rebuild now**.
+
 ### Changed
 
+- **The index keeps up with the catalog.** A check every few minutes rebuilds
+  it when a scan or import adds or removes titles, so new books show up without
+  waiting for the night.
+- **The on/off switch works.** Turning Shelves off hides the browser and
+  removes its facets from the Library Filters button; it was ignored before.
+  The Library types choice now decides which libraries get the facets as well
+  as which are indexed.
 - **The browse index rebuilds nightly.** It was only built at startup when
   empty, so books added later didn't appear in browsing until someone rebuilt
   it by hand. Change or turn off the schedule under Jobs.
 - **Listening status matches the audiobooks plugin.** An audiobook counts as
   finished in its last two minutes, or its last 1% for a long book, instead of
   only its last 30 seconds.
+
+### Fixed
+
+- **Mature titles for accounts allowed to see them.** Browsing hid mature
+  titles from every signed-in account, admins included; they now show for
+  roles with the mature-content permission, unless the account switched them
+  off. The A to Z author list no longer counts mature titles for accounts that
+  can't see them.
 
 ## [0.2.0] — 2026-10-17
 

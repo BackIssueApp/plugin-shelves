@@ -9,6 +9,65 @@
     "reading": "Wird gelesen",
     "finished": "Gelesen"
   },
+  "menu": {
+    "label": "Regale",
+    "title": "Bücher und Hörbücher nach Autor, Jahrzehnt, Format und Status durchsuchen"
+  },
+  "drawer": {
+    "label": "Regale durchsuchen",
+    "library": "Bibliothek",
+    "allLibraries": "Alle Bibliotheken",
+    "search": "Titel suchen",
+    "close": "Schließen (Esc)",
+    "filters": "Filter",
+    "filtersN": "Filter ({count})",
+    "clear": "Alle entfernen",
+    "remove": "{name} entfernen",
+    "nTitles": {
+      "one": "{n} Titel",
+      "other": "{n} Titel"
+    },
+    "showResults": "Ergebnisse anzeigen",
+    "loadMore": "Mehr laden",
+    "loading": "Wird geladen…",
+    "loadFailed": "Die Regale konnten nicht geladen werden: {error}",
+    "noMatches": "Nichts entspricht diesen Filtern.",
+    "empty": "Noch nichts indexiert.",
+    "emptyHint": "Füge eine Bücher- oder Hörbuchbibliothek hinzu oder baue den Browse-Index neu auf, falls du schon eine hast.",
+    "building": "Browse-Index wird aufgebaut: {done} von {total}",
+    "rebuild": "Index neu aufbauen",
+    "rebuildStarted": "Browse-Index wird neu aufgebaut",
+    "disabled": "Regale ist ausgeschaltet. Schalte es unter Einstellungen → Plugins ein."
+  },
+  "sort": {
+    "label": "Sortieren",
+    "author": "Autor",
+    "title": "Titel",
+    "year": "Neueste zuerst",
+    "added": "Zuletzt hinzugefügt"
+  },
+  "authors": {
+    "search": "Autor suchen",
+    "top": "Top",
+    "none": "Keine passenden Autoren."
+  },
+  "formats": {
+    "audiobook": "Audio",
+    "onDemand": "Auf Abruf"
+  },
+  "settings": {
+    "intro": "Bücher- und Hörbuchbibliotheken nach Autor, Jahrzehnt, Format und Lesestatus durchsuchen, über Regale in der Seitenleiste und die Schaltfläche Filter der Bibliothek.",
+    "types": "Bibliothekstypen",
+    "ebook": "Bücher",
+    "audiobook": "Hörbücher",
+    "rebuild": "Jetzt neu aufbauen",
+    "nIndexed": {
+      "one": "{n} Titel indexiert",
+      "other": "{n} Titel indexiert"
+    },
+    "notBuilt": "Der Browse-Index wurde noch nicht aufgebaut.",
+    "note": "Der Index aktualisiert sich selbst, wenn Titel hinzukommen oder entfernt werden, und wird jede Nacht komplett neu aufgebaut. Änderungen hier gelten nach einem Neuladen."
+  },
   "_shared": {
     "plugins": {
       "shelves": {

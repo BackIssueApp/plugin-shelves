@@ -9,6 +9,65 @@
     "reading": "In lettura",
     "finished": "Finito"
   },
+  "menu": {
+    "label": "Scaffali",
+    "title": "Sfoglia libri e audiolibri per autore, decennio, formato e stato"
+  },
+  "drawer": {
+    "label": "Sfoglia gli scaffali",
+    "library": "Libreria",
+    "allLibraries": "Tutte le librerie",
+    "search": "Cerca titoli",
+    "close": "Chiudi (Esc)",
+    "filters": "Filtri",
+    "filtersN": "Filtri ({count})",
+    "clear": "Rimuovi tutti",
+    "remove": "Rimuovi {name}",
+    "nTitles": {
+      "one": "{n} titolo",
+      "other": "{n} titoli"
+    },
+    "showResults": "Mostra risultati",
+    "loadMore": "Carica altri",
+    "loading": "Caricamento…",
+    "loadFailed": "Impossibile caricare gli scaffali: {error}",
+    "noMatches": "Nessun titolo corrisponde a questi filtri.",
+    "empty": "Non c’è ancora niente di indicizzato.",
+    "emptyHint": "Aggiungi una libreria di libri o audiolibri, oppure ricostruisci l’indice di navigazione se ne hai già una.",
+    "building": "Creazione dell’indice di navigazione: {done} di {total}",
+    "rebuild": "Ricostruisci indice",
+    "rebuildStarted": "Ricostruzione dell’indice di navigazione",
+    "disabled": "Scaffali è disattivato. Attivalo in Impostazioni → Plugin."
+  },
+  "sort": {
+    "label": "Ordina",
+    "author": "Autore",
+    "title": "Titolo",
+    "year": "Più recenti",
+    "added": "Aggiunti di recente"
+  },
+  "authors": {
+    "search": "Trova un autore",
+    "top": "Principali",
+    "none": "Nessun autore corrisponde."
+  },
+  "formats": {
+    "audiobook": "Audio",
+    "onDemand": "Su richiesta"
+  },
+  "settings": {
+    "intro": "Sfoglia le librerie di libri e audiolibri per autore, decennio, formato e stato di lettura, da Scaffali nella barra laterale e dal pulsante Filtri della libreria.",
+    "types": "Tipi di libreria",
+    "ebook": "Libri",
+    "audiobook": "Audiolibri",
+    "rebuild": "Ricostruisci ora",
+    "nIndexed": {
+      "one": "{n} titolo indicizzato",
+      "other": "{n} titoli indicizzati"
+    },
+    "notBuilt": "L’indice di navigazione non è ancora stato creato.",
+    "note": "L’indice si aggiorna da solo quando si aggiungono o rimuovono titoli, e viene ricostruito per intero ogni notte. Le modifiche qui si applicano dopo un ricaricamento."
+  },
   "_shared": {
     "plugins": {
       "shelves": {
