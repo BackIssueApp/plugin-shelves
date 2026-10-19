@@ -8,6 +8,8 @@ by the maintainers when changes merge, so concurrent PRs don't conflict here.
 
 ## [Unreleased]
 
+## [0.3.0] — 2026-10-18
+
 ### Added
 
 - **The Shelves browser.** **Shelves** in the sidebar opens a full-screen
