@@ -8,6 +8,8 @@ by the maintainers when changes merge, so concurrent PRs don't conflict here.
 
 ## [Unreleased]
 
+## [0.4.0] — 2026-10-19
+
 ### Changed
 
 - **Browsing keeps working while the index rebuilds.** A rebuild used to
