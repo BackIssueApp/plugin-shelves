@@ -8,6 +8,20 @@ by the maintainers when changes merge, so concurrent PRs don't conflict here.
 
 ## [Unreleased]
 
+### Changed
+
+- **Browsing keeps working while the index rebuilds.** A rebuild used to
+  empty the index first and refill it, so for as long as it ran the facets
+  and filters showed only part of the library. The new index is now built
+  alongside and swapped in when it's complete. Rebuilding is also about
+  three times faster (a 316,000-title library: 28 s, now 8 s) and pauses
+  less in between.
+- **No rebuilds in a loop during a remote catalog sync.** A sync adds titles
+  all the time, so every check found the index out of date and rebuilt it
+  again. Shelves now waits for the sync to finish.
+- Filtering by library (as the mobile home screen's Continue listening does)
+  uses an index instead of reading the whole shelf.
+
 ## [0.3.0] — 2026-10-18
 
 ### Added

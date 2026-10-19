@@ -35,8 +35,12 @@ export function openShelvesStore(dbPath) {
   db.pragma('journal_mode = WAL');
   db.pragma('busy_timeout = 5000');
   db.pragma('synchronous = NORMAL');
-  db.exec(`
-    CREATE TABLE IF NOT EXISTS shelf_index (
+  // The three index tables and their secondary indexes. A rebuild fills
+  // `<table>_next` copies and swaps them in (see rebuild), so the definitions
+  // live here once. Secondary indexes are matched by column rather than name:
+  // a swapped-in table brings its own, under the names it was built with.
+  const TABLES = {
+    shelf_index: `(
       series_id   INTEGER PRIMARY KEY,
       type        TEXT NOT NULL,
       issue_id    INTEGER,            -- representative issue (for status/format)
@@ -49,28 +53,41 @@ export function openShelvesStore(dbPath) {
       cover_url   TEXT,
       restricted  INTEGER NOT NULL DEFAULT 0,
       library_id  INTEGER
-    );
-    CREATE INDEX IF NOT EXISTS idx_shelf_type ON shelf_index(type);
-    CREATE INDEX IF NOT EXISTS idx_shelf_author ON shelf_index(sort_author);
-    CREATE INDEX IF NOT EXISTS idx_shelf_decade ON shelf_index(decade);
-    CREATE INDEX IF NOT EXISTS idx_shelf_sorttitle ON shelf_index(sort_title);
-
-    CREATE TABLE IF NOT EXISTS shelf_authors (
+    )`,
+    shelf_authors: `(
       id        INTEGER PRIMARY KEY AUTOINCREMENT,
       name      TEXT NOT NULL UNIQUE,
       sort_name TEXT NOT NULL,
       letter    TEXT NOT NULL
-    );
-    CREATE INDEX IF NOT EXISTS idx_shelf_authors_sort ON shelf_authors(sort_name);
-    CREATE INDEX IF NOT EXISTS idx_shelf_authors_letter ON shelf_authors(letter);
-
-    CREATE TABLE IF NOT EXISTS shelf_series_authors (
+    )`,
+    shelf_series_authors: `(
       series_id INTEGER NOT NULL,
       author_id INTEGER NOT NULL,
       PRIMARY KEY (series_id, author_id)
-    );
-    CREATE INDEX IF NOT EXISTS idx_shelf_sa_author ON shelf_series_authors(author_id);
-  `);
+    )`,
+  };
+  // library_id: every per-library facet and filter (the mobile home's
+  // Continue listening among them) narrows by it.
+  const INDEXES = {
+    shelf_index: ['type', 'sort_author', 'decade', 'sort_title', 'library_id'],
+    shelf_authors: ['sort_name', 'letter'],
+    shelf_series_authors: ['author_id'],
+  };
+  /** Create any of `base`'s secondary indexes that `table` lacks. */
+  const ensureIndexes = (table, base = table) => {
+    const have = new Set(db.prepare('SELECT name FROM pragma_index_list(?)').all(table)
+      .map((r) => db.prepare('SELECT group_concat(name) c FROM pragma_index_info(?)').get(r.name).c));
+    const tag = Date.now().toString(36);
+    for (const col of INDEXES[base]) {
+      if (!have.has(col)) db.exec(`CREATE INDEX "idx_${base}_${col}_${tag}" ON ${table}(${col})`);
+    }
+  };
+  for (const [t, def] of Object.entries(TABLES)) {
+    db.exec(`CREATE TABLE IF NOT EXISTS ${t} ${def}`);
+    ensureIndexes(t);
+  }
+  // A rebuild interrupted by a restart leaves its half-filled copies behind.
+  for (const t of Object.keys(TABLES)) db.exec(`DROP TABLE IF EXISTS ${t}_next`);
 
   // The reading-progress tables belong to the ebooks/audiobooks plugins and may
   // be absent (plugin not installed). Detect once so status queries only union
@@ -96,19 +113,23 @@ export function openShelvesStore(dbPath) {
 
     /** Rebuild the whole facet index from the core catalog. Chunked + yielding
      *  (better-sqlite3 is synchronous, so a single 100k-row transaction would
-     *  stall the event loop for seconds); each chunk commits in its own
-     *  transaction and the loop yields between chunks. It's a cache, so the brief
-     *  partial state mid-rebuild is fine. Async; returns the final tallies. */
+     *  stall the event loop for seconds): the rows go into `_next` copies of
+     *  the tables, a chunk per transaction with a yield between, and the
+     *  copies replace the live tables in one short transaction at the end —
+     *  so facets keep answering from the complete old index the whole time,
+     *  instead of from a half-emptied one. Async; returns the final tallies. */
     async rebuild({ types = DEFAULT_TYPES, chunk = 2000 } = {}) {
       if (rebuildState.running) return rebuildState;
       Object.assign(rebuildState, { running: true, done: 0, total: 0, finishedAt: null, error: null });
       try {
         const t = (types.length ? types : DEFAULT_TYPES).map(String);
         const ph = t.map(() => '?').join(',');
-        const series = db.prepare(
-          `SELECT id, title, publisher, year, type, cover_url, restricted, library_id
-             FROM series WHERE type IN (${ph}) AND library_id IS NOT NULL`).all(...t);
-        rebuildState.total = series.length;
+        const breathe = () => new Promise((r) => setImmediate(r)); // let the event loop breathe
+        // The series rows are read a chunk at a time inside the loop below
+        // (the table is wide — book descriptions — and reading it whole was
+        // most of a second in one go).
+        rebuildState.total = db.prepare(`SELECT COUNT(*) c FROM series WHERE type IN (${ph}) AND library_id IS NOT NULL`).get(...t).c;
+        await breathe();
         // Prefetch the two lookups the loop needs as maps (ONE scan each) rather
         // than two point-queries per series — at 140k series the per-row form is
         // effectively O(n²) and takes minutes. Representative issue = the lowest
@@ -116,18 +137,19 @@ export function openShelvesStore(dbPath) {
         // file (most on-demand books have none → 'on-demand').
         const firstIssue = new Map();
         for (const r of db.prepare('SELECT series_id, MIN(id) iid FROM issues GROUP BY series_id').iterate()) firstIssue.set(r.series_id, r.iid);
+        await breathe();
         const fileExt = new Map();
         for (const r of db.prepare("SELECT issue_id, path FROM library_files WHERE valid=1 AND issue_id IS NOT NULL").iterate()) {
           if (!fileExt.has(r.issue_id)) { const ext = String(r.path || '').split('.').pop().toLowerCase(); fileExt.set(r.issue_id, ext); }
         }
-        const authorId = db.prepare('SELECT id FROM shelf_authors WHERE name=?');
-        const insAuthor = db.prepare('INSERT INTO shelf_authors (name, sort_name, letter) VALUES (?,?,?)');
-        const insIndex = db.prepare(`INSERT INTO shelf_index
+        await breathe();
+        for (const [tb, def] of Object.entries(TABLES)) db.exec(`DROP TABLE IF EXISTS ${tb}_next; CREATE TABLE ${tb}_next ${def}`);
+        const authorId = db.prepare('SELECT id FROM shelf_authors_next WHERE name=?');
+        const insAuthor = db.prepare('INSERT INTO shelf_authors_next (name, sort_name, letter) VALUES (?,?,?)');
+        const insIndex = db.prepare(`INSERT INTO shelf_index_next
           (series_id, type, issue_id, title, sort_title, sort_author, year, decade, format, cover_url, restricted, library_id)
           VALUES (@sid,@type,@iid,@title,@stitle,@sauthor,@year,@decade,@format,@cover,@restricted,@lib)`);
-        const insLink = db.prepare('INSERT OR IGNORE INTO shelf_series_authors (series_id, author_id) VALUES (?,?)');
-
-        db.exec('DELETE FROM shelf_index; DELETE FROM shelf_authors; DELETE FROM shelf_series_authors');
+        const insLink = db.prepare('INSERT OR IGNORE INTO shelf_series_authors_next (series_id, author_id) VALUES (?,?)');
         const authorCache = new Map();
         const ensureAuthor = (name) => {
           if (authorCache.has(name)) return authorCache.get(name);
@@ -156,16 +178,31 @@ export function openShelvesStore(dbPath) {
           });
           for (const a of authors) insLink.run(s.id, ensureAuthor(a));
         };
-        for (let i = 0; i < series.length; i += chunk) {
-          const slice = series.slice(i, i + chunk);
+        const nextChunk = db.prepare(
+          `SELECT id, title, publisher, year, type, cover_url, restricted, library_id
+             FROM series WHERE id > ? AND type IN (${ph}) AND library_id IS NOT NULL ORDER BY id LIMIT ?`);
+        for (let after = 0; ;) {
+          const slice = nextChunk.all(after, ...t, chunk);
+          if (!slice.length) break;
+          after = slice[slice.length - 1].id;
           db.transaction(() => { for (const s of slice) indexOne(s); })();
           rebuildState.done += slice.length;
-          await new Promise((r) => setImmediate(r)); // let the event loop breathe
+          await breathe();
         }
+        // Secondary indexes on the filled copies (faster than maintaining them
+        // row by row), one at a time, then the swap.
+        for (const [tb, cols] of Object.entries(INDEXES)) {
+          for (const col of cols) { db.exec(`CREATE INDEX "idx_${tb}_${col}_${Date.now().toString(36)}" ON ${tb}_next(${col})`); await breathe(); }
+        }
+        db.transaction(() => {
+          for (const tb of Object.keys(TABLES)) db.exec(`DROP TABLE ${tb}; ALTER TABLE ${tb}_next RENAME TO ${tb}`);
+        })();
         rebuildState.finishedAt = new Date().toISOString();
         rebuildState.generation++;
       } catch (e) {
         rebuildState.error = String(e?.message || e);
+        // The live tables are untouched; drop the half-built copies.
+        try { for (const tb of Object.keys(TABLES)) db.exec(`DROP TABLE IF EXISTS ${tb}_next`); } catch { /* next rebuild drops them */ }
       } finally {
         rebuildState.running = false;
       }

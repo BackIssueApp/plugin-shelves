@@ -49,10 +49,20 @@ export default function register(api) {
   // Keep the index in step with the catalog: shortly after startup, then every
   // few minutes, rebuild when titles of the indexed types were added or removed
   // (a scan, an import, a deleted library) or the type list changed.
+  //
+  // Not while a remote catalog sync is running, though: it adds titles all
+  // the time, so every check would find the index stale and start another
+  // full rebuild. The sync's end is the next check's cue. (Soft dependency on
+  // the ebooks/audiobooks plugins — absent, nothing to wait for.)
+  const syncRunning = [];
+  for (const mod of ['../ebooks/remotesync.js', '../audiobooks/remotesync.js']) {
+    import(mod).then((m) => { if (typeof m.isRemoteSyncRunning === 'function') syncRunning.push(m.isRemoteSyncRunning); }).catch(() => {});
+  }
+  const remoteSyncBusy = () => syncRunning.some((f) => { try { return f(); } catch { return false; } });
   let checkedTypes = '';
   const refreshIfStale = () => {
     try {
-      if (!enabled() || store.rebuildState().running) return;
+      if (!enabled() || store.rebuildState().running || remoteSyncBusy()) return;
       checkedTypes = cfgTypes().join(',');
       if (store.isStale(cfgTypes())) rebuildLogged();
     } catch { /* fresh install: core tables not there yet */ }
